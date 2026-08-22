@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/layout/Navbar';
 import { Sidebar } from './components/layout/Sidebar';
-import { AuthPage } from './pages/AuthPage';
+import { LandingPage } from './pages/LandingPage';
 
 // Employee pages
 import { EmployeeDashboard } from './pages/EmployeeDashboard';
@@ -24,7 +24,7 @@ const AppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
 
   if (!currentUser) {
-    return <AuthPage />;
+    return <LandingPage />;
   }
 
   const isAdmin = currentUser.role === 'ADMIN';
