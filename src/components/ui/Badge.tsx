@@ -1,6 +1,6 @@
 import React from 'react';
 
-type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
+type BadgeVariant = 'approved' | 'pending' | 'rejected' | 'info' | 'neutral';
 
 interface BadgeProps {
   children: React.ReactNode;
@@ -10,21 +10,29 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({ children, variant = 'neutral', size = 'md' }) => {
   const styles: Record<BadgeVariant, string> = {
-    success: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-    warning: 'bg-amber-50 text-amber-700 border-amber-200/80',
-    danger: 'bg-rose-50 text-rose-700 border-rose-200/80',
-    info: 'bg-sky-50 text-sky-700 border-sky-200/80',
-    neutral: 'bg-slate-100 text-slate-700 border-slate-200',
+    approved: 'badge-approved',
+    pending: 'badge-pending',
+    rejected: 'badge-rejected',
+    info: 'badge-info',
+    neutral: 'badge-neutral',
+  };
+
+  const dotColors: Record<BadgeVariant, string> = {
+    approved: 'bg-emerald-600',
+    pending: 'bg-amber-600',
+    rejected: 'bg-rose-600',
+    info: 'bg-blue-600',
+    neutral: 'bg-slate-400',
   };
 
   const sizes = {
-    sm: 'px-2 py-0.5 text-xs font-medium',
-    md: 'px-2.5 py-1 text-xs font-semibold',
+    sm: 'px-2 py-0.5 text-[11px] font-medium tracking-tight rounded-md',
+    md: 'px-2.5 py-1 text-xs font-medium tracking-tight rounded-md',
   };
 
   return (
-    <span className={`inline-flex items-center rounded-full border ${styles[variant]} ${sizes[size]} transition-all duration-200`}>
-      <span className="w-1.5 h-1.5 rounded-full bg-current mr-1.5 opacity-80" />
+    <span className={`inline-flex items-center font-sans ${styles[variant]} ${sizes[size]}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${dotColors[variant]} mr-1.5 shrink-0`} />
       {children}
     </span>
   );
@@ -33,13 +41,13 @@ export const Badge: React.FC<BadgeProps> = ({ children, variant = 'neutral', siz
 export const AttendanceBadge: React.FC<{ status: string }> = ({ status }) => {
   switch (status) {
     case 'PRESENT':
-      return <Badge variant="success">Present</Badge>;
+      return <Badge variant="approved">Present</Badge>;
     case 'LATE':
-      return <Badge variant="warning">Late</Badge>;
+      return <Badge variant="pending">Late</Badge>;
     case 'HALF_DAY':
-      return <Badge variant="warning">Half Day</Badge>;
+      return <Badge variant="pending">Half Day</Badge>;
     case 'ABSENT':
-      return <Badge variant="danger">Absent</Badge>;
+      return <Badge variant="rejected">Absent</Badge>;
     case 'LEAVE':
       return <Badge variant="info">On Leave</Badge>;
     default:
@@ -50,11 +58,11 @@ export const AttendanceBadge: React.FC<{ status: string }> = ({ status }) => {
 export const LeaveBadge: React.FC<{ status: string }> = ({ status }) => {
   switch (status) {
     case 'APPROVED':
-      return <Badge variant="success">Approved</Badge>;
+      return <Badge variant="approved">Approved</Badge>;
     case 'PENDING':
-      return <Badge variant="warning">Pending Review</Badge>;
+      return <Badge variant="pending">Pending</Badge>;
     case 'REJECTED':
-      return <Badge variant="danger">Rejected</Badge>;
+      return <Badge variant="rejected">Rejected</Badge>;
     default:
       return <Badge variant="neutral">{status}</Badge>;
   }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Calendar, UserCheck, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const AuthPage: React.FC = () => {
   const { login, allUsers, switchRoleUser } = useAuth();
@@ -19,45 +19,41 @@ export const AuthPage: React.FC = () => {
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      setError('Please enter your email');
+      setError('Please enter your work email address');
       return;
     }
     const success = login(email);
     if (!success) {
-      setError('User not found. Try one of the preset quick demo accounts below.');
+      setError('User not found. Select a preset demo account below.');
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Dynamic Background Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl" />
-
-      <div className="w-full max-w-md glass-card bg-slate-900/90 border-slate-800 text-white rounded-3xl p-8 shadow-2xl relative z-10">
-        {/* Header Branding */}
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 mx-auto flex items-center justify-center shadow-lg shadow-blue-500/30 mb-4">
-            <Calendar className="w-7 h-7 text-white stroke-[2.5]" />
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-sm bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+        {/* Header Logo & Name */}
+        <div className="text-center mb-6">
+          <div className="w-9 h-9 rounded-md bg-slate-900 text-white font-black text-sm flex items-center justify-center mx-auto mb-3">
+            D
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Dayflow HRMS</h1>
-          <p className="text-xs text-slate-400 mt-1">Every workday, perfectly aligned.</p>
+          <h1 className="text-xl font-bold tracking-tight text-slate-900">Dayflow</h1>
+          <p className="text-xs text-slate-500 mt-1 font-normal">Every workday, perfectly aligned.</p>
         </div>
 
-        {/* Tab switcher */}
-        <div className="flex rounded-xl bg-slate-800/80 p-1 mb-6 border border-slate-700/60">
+        {/* Auth Mode Tabs */}
+        <div className="flex rounded-md bg-slate-100 p-0.5 mb-5 border border-slate-200">
           <button
             onClick={() => setIsSignUp(false)}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition ${
-              !isSignUp ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+            className={`flex-1 py-1.5 text-xs font-medium rounded transition ${
+              !isSignUp ? 'bg-white text-slate-900 shadow-2xs font-semibold' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             Sign In
           </button>
           <button
             onClick={() => setIsSignUp(true)}
-            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition ${
-              isSignUp ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
+            className={`flex-1 py-1.5 text-xs font-medium rounded transition ${
+              isSignUp ? 'bg-white text-slate-900 shadow-2xs font-semibold' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             Sign Up
@@ -65,15 +61,15 @@ export const AuthPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs font-medium">
+          <div className="mb-4 p-2.5 rounded-md bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium">
             {error}
           </div>
         )}
 
         {!isSignUp ? (
-          <form onSubmit={handleLoginSubmit} className="space-y-4">
+          <form onSubmit={handleLoginSubmit} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Work Email</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1">Work Email</label>
               <input
                 type="email"
                 value={email}
@@ -81,24 +77,21 @@ export const AuthPage: React.FC = () => {
                   setEmail(e.target.value);
                   setError('');
                 }}
-                placeholder="e.g. alex.morgan@dayflow.hr"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:border-blue-500 transition"
+                placeholder="alex.morgan@dayflow.hr"
+                className="w-full px-3 py-2 rounded-md bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-800 transition"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-md shadow-blue-500/20 transition flex items-center justify-center space-x-2"
+              className="w-full py-2.5 px-3 rounded-md bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-2xs transition flex items-center justify-center space-x-1.5"
             >
               <span>Sign In</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
         ) : (
-          <div className="space-y-4 text-xs text-slate-300">
-            <p className="text-center text-slate-400">
-              In hackathon mode, instant sign up is auto-approved with fake token verification.
-            </p>
+          <div className="space-y-3 text-xs text-slate-700">
             <div>
               <label className="block font-medium mb-1">Full Name</label>
               <input
@@ -106,7 +99,7 @@ export const AuthPage: React.FC = () => {
                 placeholder="Jane Doe"
                 value={signupForm.name}
                 onChange={(e) => setSignupForm({ ...signupForm, name: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm"
+                className="w-full px-3 py-2 rounded-md bg-slate-50 border border-slate-200 text-xs"
               />
             </div>
             <div>
@@ -116,7 +109,7 @@ export const AuthPage: React.FC = () => {
                 placeholder="jane.doe@dayflow.hr"
                 value={signupForm.email}
                 onChange={(e) => setSignupForm({ ...signupForm, email: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm"
+                className="w-full px-3 py-2 rounded-md bg-slate-50 border border-slate-200 text-xs"
               />
             </div>
             <div>
@@ -124,54 +117,50 @@ export const AuthPage: React.FC = () => {
               <select
                 value={signupForm.role}
                 onChange={(e) => setSignupForm({ ...signupForm, role: e.target.value as any })}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm"
+                className="w-full px-3 py-2 rounded-md bg-slate-50 border border-slate-200 text-xs font-medium"
               >
                 <option value="EMPLOYEE">Employee</option>
-                <option value="ADMIN">HR Admin / HR Officer</option>
+                <option value="ADMIN">HR Admin / Officer</option>
               </select>
             </div>
             <button
               onClick={() => {
                 if (signupForm.email) login(signupForm.email);
               }}
-              className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition"
+              className="w-full py-2.5 px-3 rounded-md bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs transition"
             >
               Create Account & Sign In
             </button>
           </div>
         )}
 
-        {/* Demo Quick Sign-in Section */}
-        <div className="mt-8 pt-6 border-t border-slate-800">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Quick Hackathon Demo Logins
-            </span>
+        {/* Demo Quick Logins */}
+        <div className="mt-6 pt-4 border-t border-slate-200">
+          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider font-mono mb-2">
+            Preset Hackathon Demo Logins
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {allUsers.slice(0, 3).map((usr) => (
               <button
                 key={usr.id}
                 onClick={() => switchRoleUser(usr.id)}
-                className="w-full p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/60 flex items-center justify-between text-left transition group"
+                className="w-full p-2 rounded-md bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-between text-left transition"
               >
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
                   <img
                     src={usr.photoUrl}
                     alt={usr.name}
-                    className="w-8 h-8 rounded-full object-cover border border-slate-600"
+                    className="w-6 h-6 rounded-full object-cover border border-slate-300"
                   />
                   <div>
-                    <p className="text-xs font-bold text-white group-hover:text-blue-400 transition">
-                      {usr.name}
-                    </p>
-                    <p className="text-[10px] text-slate-400">{usr.jobTitle}</p>
+                    <p className="text-xs font-semibold text-slate-900 leading-none">{usr.name}</p>
+                    <p className="text-[10px] text-slate-500 font-mono mt-0.5">{usr.jobTitle}</p>
                   </div>
                 </div>
                 <span
-                  className={`text-[9px] px-2 py-0.5 rounded font-bold uppercase ${
-                    usr.role === 'ADMIN' ? 'bg-purple-500/20 text-purple-300' : 'bg-emerald-500/20 text-emerald-300'
+                  className={`text-[9px] px-1.5 py-0.2 rounded font-mono font-semibold uppercase ${
+                    usr.role === 'ADMIN' ? 'bg-slate-200 text-slate-800' : 'bg-slate-200 text-slate-700'
                   }`}
                 >
                   {usr.role}

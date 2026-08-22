@@ -1,32 +1,171 @@
-# React + TypeScript + Vite
+# Dayflow
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**Every workday, perfectly aligned.**
 
-Currently, two official plugins are available:
+Dayflow is a Human Resource Management System (HRMS) that digitizes core HR operations — employee onboarding, attendance tracking, leave management, payroll visibility, and approval workflows — for small and mid-sized organizations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Built for [Hackathon Name] 2026.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Table of Contents
 
-## Expanding the Oxlint configuration
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
+- [Demo Credentials](#demo-credentials)
+- [Screenshots](#screenshots)
+- [Roadmap](#roadmap)
+- [Team](#team)
+- [License](#license)
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+---
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Overview
+
+Most small teams manage HR through a mix of spreadsheets, WhatsApp messages, and manual sign-off chains. Dayflow replaces that with a single system where employees can check in, apply for leave, and view their own records — while HR gets one dashboard to approve, track, and report on all of it.
+
+The system supports two roles:
+
+| Role | Capabilities |
+|---|---|
+| **Admin / HR Officer** | Manage employees, approve/reject attendance & leave, control payroll, view analytics |
+| **Employee** | View profile, track attendance, apply for leave, view (read-only) salary |
+
+---
+
+## Features
+
+- 🔐 **Secure authentication** — email + password sign-up/sign-in with role selection
+- 🧑‍💼 **Employee profiles** — personal, job, and salary details; employees edit limited fields, admins edit all
+- 🕒 **Attendance tracking** — daily/weekly views, check-in/check-out, status breakdown (present/absent/half-day/leave)
+- 📅 **Leave management** — apply by type (paid/sick/unpaid) with date range and remarks; admin approval queue with comments
+- 💰 **Payroll visibility** — read-only salary view for employees, full control for admins
+- 📊 **Analytics dashboard** — attendance trends, leave distribution, headline HR metrics
+- 🧾 **Salary slip export** — downloadable PDF per employee
+- ⚡ **Real-time status updates** — leave/attendance changes reflect instantly without a page reload
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React, Vite, TypeScript, Tailwind CSS, shadcn/ui |
+| State/Data | React Query |
+| Backend | Node.js, Express |
+| Database | PostgreSQL + Prisma ORM |
+| Auth | JWT, bcrypt |
+| Charts | Recharts |
+| PDF Export | jsPDF |
+| Deployment | Vercel (frontend), Railway (backend + DB) |
+
+---
+
+## Architecture
+
+```
+┌─────────────┐        REST API        ┌──────────────┐        ┌──────────────┐
+│   React SPA  │ ─────────────────────▶ │   Express API │ ─────▶ │  PostgreSQL   │
+│ (Vite + TS)  │ ◀───────────────────── │   (JWT auth)  │ ◀───── │  (Prisma ORM) │
+└─────────────┘                        └──────────────┘        └──────────────┘
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Wireframes and flow diagrams: [Excalidraw board](https://link.excalidraw.com/l/65VNwvy7c4X/58RLEJ4oOwh)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- PostgreSQL ≥ 14 (or use the provided Docker Compose setup)
+
+### Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/<your-org>/dayflow-hrms.git
+cd dayflow-hrms
+
+# Install dependencies (frontend + backend)
+npm install
+
+# Set up environment variables
+cp .env.example .env
+
+# Run database migrations and seed demo data
+npx prisma migrate dev
+npx prisma db seed
+
+# Start the app
+npm run dev
+```
+
+The frontend runs at `http://localhost:5173`, the API at `http://localhost:3000`.
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the root based on `.env.example`:
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/dayflow"
+JWT_SECRET="your-secret-key"
+PORT=3000
+```
+
+---
+
+## Project Structure
+
+```
+dayflow-hrms/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Route-level pages (dashboard, attendance, leave, payroll)
+│   │   ├── hooks/          # Custom React Query hooks
+│   │   └── lib/            # API client, utilities
+├── server/                 # Express backend
+│   ├── src/
+│   │   ├── routes/         # API route handlers
+│   │   ├── controllers/    # Business logic
+│   │   ├── middleware/     # Auth guards, error handling
+│   │   └── prisma/         # Schema and migrations
+├── docs/                   # Requirements doc, wireframes
+└── README.md
+```
+
+---
+
+## Demo Credentials
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@dayflow.demo | Demo@1234 |
+| Employee | employee@dayflow.demo | Demo@1234 |
+
+> Seed data includes 10 employees with pre-populated attendance history and leave requests in various states for demo purposes.
+
+---
+
+## Roadmap
+
+- [ ] Email verification and notification alerts
+- [ ] Automated payroll calculation engine (tax, deductions)
+- [ ] Mobile app (React Native)
+- [ ] Shift scheduling and multi-location support
+- [ ] Document management (contracts, ID uploads)
+
+---
+
+## License
+
+This project was built for hackathon purposes and is available under the [MIT License](LICENSE).
