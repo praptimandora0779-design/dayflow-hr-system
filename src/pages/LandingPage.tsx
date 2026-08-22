@@ -782,7 +782,7 @@ export const LandingPage: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  if (showAuth) return <AuthPage />;
+  if (showAuth) return <AuthPage onBackToHome={() => setShowAuth(false)} />;
 
   const goToAuth = () => setShowAuth(true);
 
