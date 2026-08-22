@@ -337,5 +337,5 @@ export const INITIAL_NOTIFICATIONS: NotificationItem[] = [
     timestamp: getPastDate(16),
     read: true,
     type: 'LEAVE_APPROVAL',
-  },
+  }
 ];
