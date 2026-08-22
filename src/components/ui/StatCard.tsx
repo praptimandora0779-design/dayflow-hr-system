@@ -10,7 +10,6 @@ interface StatCardProps {
     value: string;
     isPositive: boolean;
   };
-  colorScheme?: 'blue' | 'emerald' | 'amber' | 'purple' | 'rose';
 }
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -19,31 +18,26 @@ export const StatCard: React.FC<StatCardProps> = ({
   subtitle,
   icon: Icon,
   trend,
-  colorScheme = 'blue',
 }) => {
-  const colorMap = {
-    blue: 'bg-blue-50 text-blue-600 border-blue-100',
-    emerald: 'bg-emerald-50 text-emerald-600 border-emerald-100',
-    amber: 'bg-amber-50 text-amber-600 border-amber-100',
-    purple: 'bg-purple-50 text-purple-600 border-purple-100',
-    rose: 'bg-rose-50 text-rose-600 border-rose-100',
-  };
-
   return (
-    <div className="glass-card rounded-2xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+    <div className="hr-panel p-4 flex flex-col justify-between">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">{title}</span>
-        <div className={`p-2.5 rounded-xl border ${colorMap[colorScheme]}`}>
-          <Icon className="w-5 h-5" />
-        </div>
+        <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500 font-mono">
+          {title}
+        </span>
+        <Icon className="w-4 h-4 text-slate-400 stroke-[1.75]" />
       </div>
 
       <div className="mt-3 flex items-baseline justify-between">
-        <h3 className="text-2xl font-bold text-slate-900 tracking-tight">{value}</h3>
+        <h3 className="text-2xl font-semibold text-slate-900 tracking-tight tabular-nums font-mono">
+          {value}
+        </h3>
         {trend && (
           <span
-            className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-              trend.isPositive ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+            className={`text-[11px] font-medium px-2 py-0.5 rounded-md border ${
+              trend.isPositive
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                : 'bg-rose-50 text-rose-800 border-rose-200'
             }`}
           >
             {trend.isPositive ? '↑' : '↓'} {trend.value}
@@ -51,7 +45,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         )}
       </div>
 
-      {subtitle && <p className="mt-1 text-xs text-slate-500">{subtitle}</p>}
+      {subtitle && <p className="mt-1 text-xs text-slate-500 font-normal">{subtitle}</p>}
     </div>
   );
 };
