@@ -6,7 +6,7 @@ export const INITIAL_USERS: User[] = [
     employeeId: 'EMP-001',
     name: 'Sarah Jenkins',
     email: 'sarah.jenkins@dayflow.hr',
-    role: 'ADMIN',
+    role: 'admin',
     department: 'Human Resources',
     jobTitle: 'Head of HR Operations',
     joinDate: '2022-01-15',
