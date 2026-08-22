@@ -90,7 +90,7 @@ export const INITIAL_USERS: User[] = [
     department: 'Marketing',
     jobTitle: 'Growth Lead',
     joinDate: '2024-01-08',
-    phone: '+1 (555) 456-7890',
+    phone : '+1 (555) 456-7890',
     address: '100 Market St, Denver, CO',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
     salary: {
