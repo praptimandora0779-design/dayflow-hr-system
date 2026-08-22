@@ -268,7 +268,7 @@ export const INITIAL_LEAVES: LeaveRequest[] = [
     endDate: getPastDate(-14),
     daysCount: 5,
     reason: 'Annual family vacation leave.',
-    status: 'APPROVED'
+    status: 'APPROVED',
     appliedOn: getPastDate(18),
     adminComment: 'Enjoy your trip! Project lead backup confirmed.',
     reviewedBy: 'Sarah Jenkins',
